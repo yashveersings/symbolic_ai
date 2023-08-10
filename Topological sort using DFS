@@ -1,0 +1,27 @@
+adj_list={
+    'A': ['B', 'C'],
+    'B': ['C', 'D'],
+    'C': ['D', 'E'],
+    'D': ['E', 'F'],
+    'E': ['F'],
+    'F': []
+}
+
+stack=[]
+visited=set()
+
+    
+def top_dfs(start):
+    visited.add(start)
+    
+    for neighbour in adj_list[start]:
+        if neighbour not in visited:
+            top_dfs(neighbour)
+    stack.append(start)
+
+for node in adj_list:
+    if node not in visited:
+        top_dfs(node)
+
+print(stack[::-1])
+    
