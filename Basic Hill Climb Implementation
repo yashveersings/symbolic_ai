@@ -1,0 +1,19 @@
+import random
+def f(x):
+    return -x**2+5*x+10
+def hill_climb(start,step_size,max_iterations):
+    current=start
+    for i in range(max_iterations):
+        left=current-step_size
+        right=current+step_size
+        if(f(left)>f(current)):
+            current=left
+        elif(f(right)>f(current)):
+            current=right
+        return current,f(current)
+for i in range(5):
+    start=random.uniform(-10,10)
+    step_size=0.1
+    max_iterations=1000
+    a,b=hill_climb(start,step_size,max_iterations)
+    print(a)
