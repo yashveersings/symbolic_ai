@@ -1,0 +1,50 @@
+import random
+
+def generaterandom(n):
+    board=[0]*n
+    for i in range(n):
+        board[i]=random.randint(0,n-1)
+    return board
+
+def heuristic(board):
+    cost=0
+    for i in range(len(board)):
+        for j in range(i+1,len(board)):
+            if board[i]==board[j] or abs(board[i]-board[j])==abs(i-j):
+                cost=cost+1
+    return cost
+
+def nqueen(n):
+    current_node=generaterandom(n)
+    current_cost=heuristic(current_node)
+    
+    while True:
+        neighbours=[]
+        
+        for col in range(n):
+            for row in range(n):
+                if current_node[col]!=row:
+                    neighbour=list(current_node)
+                    neighbour[col]=row
+                    neighbours.append(neighbour)
+                    
+        best_cost=current_cost
+        best_node=current_node
+        
+        for neighbour in neighbours:
+            cost=heuristic(neighbour)
+            if cost<best_cost:
+                best_cost=cost
+                best_node=neighbour
+        
+        if best_cost==current_cost:
+            break
+            
+        current_cost=best_cost
+        current_node=best_node
+        
+    return current_node if current_cost==0 else None
+    
+n = 4
+solution = nqueen(n)
+print(solution)
