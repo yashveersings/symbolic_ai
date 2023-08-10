@@ -1,0 +1,48 @@
+import numpy as np
+import heapq
+
+def heuristic(current,goal):
+    return np.sum(current!=goal)
+
+def get_neighbour(state):
+    neighbour=[]
+    i,j=np.where(state==0)
+    moves=[(0,1),(1,0),(-1,0),(0,-1)]
+    for move in moves:
+        new_i=i+move[0]
+        new_j=j+move[1]
+        if(new_i>=0 and new_i<3 and new_j>=0 and new_j<3):
+            new_state=state.copy()
+            new_state[i,j]=new_state[new_i,new_j]
+            new_state[new_i,new_j]=0
+            neighbour.append(tuple(map(tuple,new_state)))
+    return neighbour
+def a_star(start,goal):
+    frontier=[(heuristic(start,goal),tuple(map(tuple,start)))]
+    cost_so_far={tuple(map(tuple,start)):0}
+    path={tuple(map(tuple,start)):None}
+    
+    while frontier:
+        curr_cost,current=heapq.heappop(frontier)
+        if np.array_equal(current,goal):
+            result=[]
+            while current is not None:
+                result.append(current)
+                current=path[current]
+            result.reverse()
+            return result,curr_cost
+        for neighbour in get_neighbour(np.array(current)):
+            new_cost=cost_so_far[current]+1
+            if neighbour not in cost_so_far or cost_so_far[neighbour]>new_cost:
+                cost_so_far[neighbour]=new_cost
+                priority=new_cost+heuristic(neighbour,goal)
+                heapq.heappush(frontier,(priority,neighbour))
+                path[neighbour]=current
+    return None,None
+start = np.array([[1, 2, 3], [8, 0, 4], [7, 6, 5]]) # example start matrix
+goal = np.array([[2, 8, 1], [0, 4, 3], [7, 6, 5]])
+result,cost=a_star(start,goal)
+for i in range(len(result)):
+    print('')
+    print(result[i])
+print (cost)
