@@ -1,0 +1,20 @@
+import itertools
+letter1=input('Enter first letter')
+letter2=input('Enter second  letter')
+letter3=input('Enter third letter')
+letters=set(letter1+letter2+letter3)
+digits=range(10)
+combinations=itertools.permutations(digits,len(letters))
+for combination in combinations:
+    mapped=dict(zip(letters,combination))
+    
+    if mapped[letter1[0]]==0 or mapped[letter2[0]]==0 or mapped[letter3[0]]==0:
+        continue
+        
+    num1=int(''.join([str(mapped[c])for c in letter1]))
+    num2=int(''.join([str(mapped[c])for c in letter2]))
+    num3=int(''.join([str(mapped[c])for c in letter3]))
+    
+    if num1+num2==num3:
+        print(num1,'+',num2,'=',num3)
+        break
