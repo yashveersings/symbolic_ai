@@ -1,0 +1,32 @@
+import heapq
+adj_list = {'A': [('B', 2), ('E', 3)],'B': [('A', 2), ('C', 1), ('G', 9)],'C': [('B', 1)],'D': [('E', 6), ('G', 1)],'E': [('A', 3), ('D', 6)],'G': [('B', 9), ('D', 1)]}
+def heuristic(n,goal):
+    H_dist = {'A': 11,'B': 6,'C': 99,'D': 1,'E': 7,'G': 0,}
+    return H_dist[n]
+
+def a_star(start,goal):
+    frontier=[(0,start)]
+    path={start:None}
+    cost_so_far={start:0}
+    
+    while frontier:
+        cost,current=heapq.heappop(frontier)
+        
+        if current==goal:
+            result=[]
+            while current is not None:
+                result.append(current)
+                current=path[current]
+            result.reverse()
+            return result,cost
+        
+        for neighbour,weight in adj_list[current]:
+            new_cost=weight+cost_so_far[current]
+            if neighbour not in cost_so_far or new_cost<cost_so_far[neighbour]:
+                cost_so_far[neighbour]=new_cost
+                priority=new_cost+heuristic(neighbour,goal)
+                heapq.heappush(frontier,(priority,neighbour))
+                path[neighbour]=current
+    return None,None
+
+print(a_star('A','G'))
