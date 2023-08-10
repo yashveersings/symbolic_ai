@@ -1,52 +1,18 @@
-class Graph:
-    def __init__(self,Nodes):
-        self.nodes=Nodes;
-        self.adj_list={};
-        for node in self.nodes:
-            self.adj_list[node]=[]
-    def add_edge(self,u,v,w):
-        self.adj_list[u].append((v,w))
-        self.adj_list[v].append((u,w))
-    def print_graph(self):
-        for node in self.nodes:
-            print(node,"->",self.adj_list[node])
-Nodes=[]
-num_nodes=int(input('Enter number of nodes'))
-for i in range (num_nodes):
-    node=input('Enter node')
-    Nodes.append(node)
-all_edge=[]
-num_edges=int(input('Enter number of edges'))
-for i in range(num_edges):
-    edge=input('Enter edge in the format(u v w)')
-    u,v,w=edge.split()
-    all_edge.append((u,v,w))
-g1=Graph(Nodes)
-for u,v,w in all_edge:
-    g1.add_edge(u,v,w);
-g1.print_graph()
-
-stack=[]
-visited={}
-def bfs(u):
-    visited[u]=1;
-    queue.append(u)
-    
-    while(queue):
-        current=queue.pop(0)
-        print(current)
-        for w in g1.adj_list[current]:
-            if(visited[w]==0):
-                visited[w]=1
-                queue.append(w)
-visited={}
+adj_list = {'0': ['1', '2'], '2': ['0', '3'], '1': ['2'], '3': ['3']}
 queue=[]
-for node in g1.adj_list.keys():
-    visited[node]=0
-for node in g1.adj_list:
-    if(visited[node]==0):
-        bfs('a')
-        
-            
-        
-        
+visited={}
+for node in adj_list.keys():
+    visited[node]=False
+def bfs(start):
+    visited[start]=True;
+    queue.append(start)
+    while(queue):
+        node=queue.pop(0)
+        print(node)
+        for w in adj_list[node]:
+            if visited[w]==False:
+                visited[w]=True
+                queue.append(w)
+for node in adj_list.keys():
+    if visited[node]==False:
+        bfs(node)
