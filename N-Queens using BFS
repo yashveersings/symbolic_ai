@@ -1,0 +1,22 @@
+def is_valid(current):
+    cost=0
+    col=len(current)-1
+    for i in range(col):
+        if current[i]==current[col] or abs(current[i]-current[col])==abs(i-col):
+            return False
+    return True
+
+def bfs(n):
+    stack=[([],0)]
+    while stack:
+        current,col=stack.pop()
+        print(current)
+        if col==n:
+            return True
+        for row in range(n):
+            neighbour=list(current)
+            neighbour.append(row)
+            if is_valid(neighbour):
+                stack.append((neighbour,col+1))
+    return False
+bfs(4)
