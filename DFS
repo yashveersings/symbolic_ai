@@ -1,0 +1,42 @@
+class Graph:
+    def __init__(self,Nodes):
+        self.nodes=Nodes
+        self.adj_list={}
+        for node in Nodes:
+            self.adj_list[node]=[]
+    def add_edge(self,u,v):
+        self.adj_list[u].append(v)
+        self.adj_list[v].append(u)
+num_nodes=int(input('Enter number of nodes'))
+Nodes=[]
+for i in range (num_nodes):
+    node=input('Enter node')
+    Nodes.append(node)
+g1=Graph(Nodes)
+num_edges=int(input('Enter number of edges'))
+for i in range (num_edges):
+    edges=input('Enter edge in the form u v')
+    u,v=edges.split()
+    g1.add_edge(u,v)
+print(g1.adj_list)
+
+def dfs(graph,start):
+    stack=[start]
+    visited=set()
+    
+    while stack:
+        current=stack.pop()
+        
+        if current in visited:
+            continue
+            
+        visited.add(current)
+        
+        print(current)
+        
+        for neighbour in g1.adj_list[current]:
+            if neighbour not in visited:
+                stack.append(neighbour)
+bfs(g1,'a')
+    
+    
