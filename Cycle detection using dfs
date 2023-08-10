@@ -1,0 +1,22 @@
+adj_list = {'0': ['1', '2'], '2': ['0', '3'], '1': ['2'], '3': ['3']}
+visited={}
+parent={}
+dfs_output=[]
+for node in adj_list.keys():
+    visited[node]=False
+    parent[node]=None
+def dfs(u):
+    visited[u]=True
+    dfs_output.append(u)
+    for v in adj_list[u]:
+        if visited[v]==False:
+            parent[v]=u
+            dfs(v)
+        elif parent[u]!=v:
+            print('Cycle detected at ',v)
+for node in adj_list:
+    if visited[node]==False:
+        dfs(node)
+print(dfs_output)
+        
+    
